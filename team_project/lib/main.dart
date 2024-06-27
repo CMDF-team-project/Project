@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:team_project/additional_screens/welcome_screen.dart';
+import 'package:team_project/screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -57,22 +58,6 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: hasInternet ? const SplashScreen() : const HomeScreen(),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Screen'),
-      ),
-      body: const Center(
-        child: Text('You are connected to the internet.'),
-      ),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:team_project/custom%20painter/combined_painter.dart';
-import 'package:team_project/main.dart';
+import 'package:team_project/screens/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
