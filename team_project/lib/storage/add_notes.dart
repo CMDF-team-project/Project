@@ -12,6 +12,6 @@ Future<void> addMoodNote(String userId, DateTime date, String mood, {String? not
     });
   } catch (e) {
     print('Error adding mood note: $e');
-    throw e;
+    rethrow;
   }
 }

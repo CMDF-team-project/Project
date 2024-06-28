@@ -3,7 +3,7 @@ import 'package:team_project/custom%20painter/combined_painter.dart';
 import 'package:team_project/screens/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   _SplashScreenState createState() => _SplashScreenState();

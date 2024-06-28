@@ -46,6 +46,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '220453368114',
     projectId: 'flutter-project-c5caa',
     authDomain: 'flutter-project-c5caa.firebaseapp.com',
+    databaseURL: 'https://flutter-project-c5caa-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'flutter-project-c5caa.appspot.com',
     measurementId: 'G-P2XRTD3KCR',
   );
@@ -55,6 +56,7 @@ class DefaultFirebaseOptions {
     appId: '1:220453368114:android:0107642dbe9c57c8a7e72b',
     messagingSenderId: '220453368114',
     projectId: 'flutter-project-c5caa',
+    databaseURL: 'https://flutter-project-c5caa-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'flutter-project-c5caa.appspot.com',
   );
 
@@ -63,6 +65,7 @@ class DefaultFirebaseOptions {
     appId: '1:220453368114:ios:401bc806f374fdcda7e72b',
     messagingSenderId: '220453368114',
     projectId: 'flutter-project-c5caa',
+    databaseURL: 'https://flutter-project-c5caa-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'flutter-project-c5caa.appspot.com',
     iosBundleId: 'com.example.teamProject',
   );
@@ -72,6 +75,7 @@ class DefaultFirebaseOptions {
     appId: '1:220453368114:ios:401bc806f374fdcda7e72b',
     messagingSenderId: '220453368114',
     projectId: 'flutter-project-c5caa',
+    databaseURL: 'https://flutter-project-c5caa-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'flutter-project-c5caa.appspot.com',
     iosBundleId: 'com.example.teamProject',
   );
@@ -82,7 +86,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '220453368114',
     projectId: 'flutter-project-c5caa',
     authDomain: 'flutter-project-c5caa.firebaseapp.com',
+    databaseURL: 'https://flutter-project-c5caa-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'flutter-project-c5caa.appspot.com',
     measurementId: 'G-K33CRFGDHN',
   );
+
 }

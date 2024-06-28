@@ -2,18 +2,23 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:team_project/additional_screens/welcome_screen.dart';
 import 'package:team_project/screens/home_screen.dart';
+import 'firebase_options.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -22,11 +27,13 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late StreamSubscription<ConnectivityResult> subscription;
   bool hasInternet = true;
+  FirebaseDatabase database = FirebaseDatabase.instance;
 
   @override
   void initState() {
     super.initState();
     checkInternetConnection();
+    
     subscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       setState(() {
         hasInternet = result != ConnectivityResult.none;
@@ -61,7 +68,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: hasInternet ? const SplashScreen() : const HomeScreen(),
+      home: hasInternet ? const HomeScreen() : const SplashScreen(),
     );
   }
 }
