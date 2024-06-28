@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:team_project/screens/mood_page.dart';
+import 'package:provider/provider.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
+import 'package:team_project/storage/provider.dart';
+import 'mood_page.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
 
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDay;
+class HomeScreen extends StatelessWidget {
   final FirebaseDatabase _database = FirebaseDatabase.instance;
 
   @override
   Widget build(BuildContext context) {
+    final model = Provider.of<MoodModel>(context);
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -29,23 +25,16 @@ class _HomeScreenState extends State<HomeScreen> {
               child: TableCalendar(
                 firstDay: DateTime.utc(2020, 1, 1),
                 lastDay: DateTime.utc(2100, 12, 31),
-                focusedDay: _focusedDay,
+                focusedDay: model.selectedDay ?? DateTime.now(),
                 calendarFormat: CalendarFormat.month,
                 selectedDayPredicate: (day) {
-                  return isSameDay(_selectedDay, day);
+                  return isSameDay(model.selectedDay, day);
                 },
                 onDaySelected: (selectedDay, focusedDay) {
-                  if (!isSameDay(_selectedDay, selectedDay)) {
-                    setState(() {
-                      _selectedDay = selectedDay;
-                      _focusedDay = focusedDay;
-                    });
-                    _showMoodDialog(selectedDay);
-                  }
+                  model.selectDay(selectedDay);
+                  _showMoodDialog(context, selectedDay);
                 },
-                onPageChanged: (focusedDay) {
-                  _focusedDay = focusedDay;
-                },
+                onPageChanged: (focusedDay) {},
                 headerStyle: const HeaderStyle(
                   formatButtonVisible: false,
                   titleCentered: true,
@@ -67,18 +56,15 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             IconButton(
               icon: const Icon(Icons.home),
-              onPressed: () {
-              },
+              onPressed: () {},
             ),
             IconButton(
               icon: const Icon(Icons.equalizer),
-              onPressed: () {
-              },
+              onPressed: () {},
             ),
             IconButton(
               icon: const Icon(Icons.settings),
-              onPressed: () {
-              },
+              onPressed: () {},
             ),
             IconButton(
               icon: const Icon(Icons.add),
@@ -95,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _showMoodDialog(DateTime selectedDay) async {
+  void _showMoodDialog(BuildContext context, DateTime selectedDay) async {
     String formattedDate = DateFormat('d MMMM, yyyy').format(selectedDay);
     DatabaseReference ref = _database.ref().child('mood_entries').child(formattedDate);
 
