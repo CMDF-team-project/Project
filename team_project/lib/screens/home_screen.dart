@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:team_project/screens/mood_page.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+  final FirebaseDatabase _database = FirebaseDatabase.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       _selectedDay = selectedDay;
                       _focusedDay = focusedDay;
                     });
+                    _showMoodDialog(selectedDay);
                   }
                 },
                 onPageChanged: (focusedDay) {
@@ -89,5 +93,59 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  void _showMoodDialog(DateTime selectedDay) async {
+    String formattedDate = DateFormat('d MMMM, yyyy').format(selectedDay);
+    DatabaseReference ref = _database.ref().child('mood_entries').child(formattedDate);
+
+    DataSnapshot snapshot = await ref.get();
+    if (snapshot.exists) {
+      Map<dynamic, dynamic> data = snapshot.value as Map<dynamic, dynamic>;
+      String mood = data['mood'];
+      String description = data['description'];
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Mood on $formattedDate'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('Mood: $mood'),
+                Text('Description: $description'),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Close'),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Mood on $formattedDate'),
+            content: const Text('No mood data for this day.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Close'),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }

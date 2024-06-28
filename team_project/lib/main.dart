@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: hasInternet ? const HomeScreen() : const SplashScreen(),
+      home: hasInternet ? const SplashScreen() : const HomeScreen(),
     );
   }
 }
