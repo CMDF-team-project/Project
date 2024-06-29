@@ -1,21 +1,23 @@
 import 'dart:async';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'package:team_project/additional_screens/welcome_screen.dart';
+import 'package:team_project/firebase_options.dart';
+import 'package:team_project/storage/provider.dart';
+import 'connection.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:team_project/additional_screens/welcome_screen.dart';
-import 'package:team_project/screens/home_screen.dart';
-import 'package:team_project/storage/provider.dart';
-import 'firebase_options.dart';
-import 'package:provider/provider.dart';
 
-void main() async {
+late final ConnectivityService connectionService;
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  connectionService = await ConnectivityService(Connectivity()).init();
   runApp(
     ChangeNotifierProvider(
       create: (context) => MoodModel(),
@@ -24,58 +26,13 @@ void main() async {
   );
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  late StreamSubscription<ConnectivityResult> subscription;
-  bool hasInternet = true;
-  FirebaseDatabase database = FirebaseDatabase.instance;
-
-  @override
-  void initState() {
-    super.initState();
-    checkInternetConnection();
-    
-    subscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-      setState(() {
-        hasInternet = result != ConnectivityResult.none;
-        reloadAppIfNeeded();
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    subscription.cancel();
-    super.dispose();
-  }
-
-  void checkInternetConnection() async {
-    var result = await Connectivity().checkConnectivity();
-    setState(() {
-      hasInternet = result != ConnectivityResult.none;
-    });
-  }
-
-  void reloadApp() {
-    WidgetsBinding.instance.addPostFrameCallback((_) => runApp(const MyApp()));
-  }
-
-  void reloadAppIfNeeded() {
-    if (!hasInternet) {
-      reloadApp();
-    }
-  }
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: hasInternet ? const SplashScreen() : HomeScreen(),
+    return const MaterialApp(
+      home: SplashScreen(),
     );
   }
 }

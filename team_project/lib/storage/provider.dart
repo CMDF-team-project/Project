@@ -9,6 +9,7 @@ class MoodModel with ChangeNotifier {
   final TextEditingController _descriptionController = TextEditingController();
   final DatabaseReference _moodEntriesRef = FirebaseDatabase.instance.ref().child('mood_entries');
 
+
   DateTime? get selectedDay => _selectedDay;
   Map<String, dynamic> get moodData => _moodData;
   String? get selectedMood => _selectedMood;

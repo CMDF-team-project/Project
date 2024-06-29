@@ -3,15 +3,80 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
+import 'package:team_project/connection.dart';
 import 'package:team_project/storage/provider.dart';
 import 'mood_page.dart';
 
 
-class HomeScreen extends StatelessWidget {
-  final FirebaseDatabase _database = FirebaseDatabase.instance;
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> 
+  with ConnectionAwareMixin<HomeScreen>, DefaultConnectionAwareMixin<HomeScreen>
+  implements RestartableStateInterface {
+
+  final FirebaseDatabase _database = FirebaseDatabase.instance;
+
+  void _showMoodDialog(BuildContext context, DateTime selectedDay) async {
+    String formattedDate = DateFormat('d MMMM, yyyy').format(selectedDay);
+    DatabaseReference ref = _database.ref().child('mood_entries').child(formattedDate);
+
+    DataSnapshot snapshot = await ref.get();
+    if (snapshot.exists) {
+      Map<dynamic, dynamic> data = snapshot.value as Map<dynamic, dynamic>;
+      String mood = data['mood'];
+      String description = data['description'];
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Mood on $formattedDate'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('Your mood today: $mood'),
+                Text('Describe your day : $description'),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Close'),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Mood on $formattedDate'),
+            content: const Text('No notes for this day.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Close'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  @override
+  Widget buildPage(BuildContext context) {
     final model = Provider.of<MoodModel>(context);
 
     return Scaffold(
@@ -79,59 +144,5 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _showMoodDialog(BuildContext context, DateTime selectedDay) async {
-    String formattedDate = DateFormat('d MMMM, yyyy').format(selectedDay);
-    DatabaseReference ref = _database.ref().child('mood_entries').child(formattedDate);
-
-    DataSnapshot snapshot = await ref.get();
-    if (snapshot.exists) {
-      Map<dynamic, dynamic> data = snapshot.value as Map<dynamic, dynamic>;
-      String mood = data['mood'];
-      String description = data['description'];
-
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Mood on $formattedDate'),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('Mood: $mood'),
-                Text('Description: $description'),
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Close'),
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Mood on $formattedDate'),
-            content: const Text('No mood data for this day.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Close'),
-              ),
-            ],
-          );
-        },
-      );
-    }
   }
 }
