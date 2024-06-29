@@ -7,8 +7,7 @@ class MoodModel with ChangeNotifier {
   Map<String, dynamic> _moodData = {};
   String? _selectedMood;
   final TextEditingController _descriptionController = TextEditingController();
-  final DatabaseReference _moodEntriesRef = FirebaseDatabase.instance.ref().child('mood_entries');
-
+  DatabaseReference _moodEntriesRef = FirebaseDatabase.instance.ref().child('mood_entries');
 
   DateTime? get selectedDay => _selectedDay;
   Map<String, dynamic> get moodData => _moodData;
@@ -28,6 +27,10 @@ class MoodModel with ChangeNotifier {
   void setSelectedMood(String? mood) {
     _selectedMood = mood;
     notifyListeners();
+  }
+
+  void  setDatabaseReference(DatabaseReference reference) {
+    _moodEntriesRef = reference;
   }
 
   Future<bool> checkExistingEntry() async {

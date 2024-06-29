@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:intl/intl.dart';
-import 'package:team_project/connection.dart';
+import 'package:team_project/connectivity/core.dart';
+import 'package:team_project/dialogue/mood_dialogue.dart';
 import 'package:team_project/storage/provider.dart';
 import 'mood_page.dart';
 
@@ -18,63 +17,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> 
   with ConnectionAwareMixin<HomeScreen>, DefaultConnectionAwareMixin<HomeScreen>
   implements RestartableStateInterface {
-
-  final FirebaseDatabase _database = FirebaseDatabase.instance;
-
-  void _showMoodDialog(BuildContext context, DateTime selectedDay) async {
-    String formattedDate = DateFormat('d MMMM, yyyy').format(selectedDay);
-    DatabaseReference ref = _database.ref().child('mood_entries').child(formattedDate);
-
-    DataSnapshot snapshot = await ref.get();
-    if (snapshot.exists) {
-      Map<dynamic, dynamic> data = snapshot.value as Map<dynamic, dynamic>;
-      String mood = data['mood'];
-      String description = data['description'];
-
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Mood on $formattedDate'),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('Your mood today: $mood'),
-                Text('Describe your day : $description'),
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Close'),
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Mood on $formattedDate'),
-            content: const Text('No notes for this day.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Close'),
-              ),
-            ],
-          );
-        },
-      );
-    }
-  }
-
   @override
   Widget buildPage(BuildContext context) {
     final model = Provider.of<MoodModel>(context);
@@ -97,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen>
                 },
                 onDaySelected: (selectedDay, focusedDay) {
                   model.selectDay(selectedDay);
-                  _showMoodDialog(context, selectedDay);
+                  showMoodDialog(context, selectedDay);
                 },
                 onPageChanged: (focusedDay) {},
                 headerStyle: const HeaderStyle(

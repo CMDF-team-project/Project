@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:team_project/custom%20painter/combined_painter.dart';
-import 'package:team_project/screens/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  SplashScreen({super.key});
+
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -40,15 +40,14 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
     _sunController.forward();
 
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 1), () {
       _raysController.forward();
     });
 
     Future.delayed(const Duration(seconds: 5), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => HomeScreen(),
-        ),
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        '/home', 
+        (route) => false,
       );
     });
   }
