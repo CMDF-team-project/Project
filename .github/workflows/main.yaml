@@ -38,4 +38,3 @@ jobs:
               with:
                 baseHref: /team_project/
                 customArgs: "lib/main.dart"
-                working-directory: Project/team_project
