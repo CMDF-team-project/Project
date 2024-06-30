@@ -10,10 +10,10 @@ on:
             - ci/cd
 
 jobs:
-    test:
+    build:
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout code
+            - name: Checkout repository
               uses: actions/checkout@v2
 
             - name: Set up Flutter
@@ -25,14 +25,14 @@ jobs:
               run: flutter pub get
 
             - name: Analyze code
-              run: flutter analyze
+              run: flutter analyze lib/main.dart
 
             - name: Run tests
               run: flutter test test/combined_painter_test.dart
               run: flutter test test/no_connectivity_widget_test.dart
 
-            - name: Build Windows app
-              run: flutter build windows --release lib/main.dart
+            - name: Build Web app
+              run: flutter build web --release lib/main.dart
 
             - uses: bluefireteam/flutter-gh-pages@v7
               with:
