@@ -32,9 +32,9 @@ jobs:
               run: flutter test test/combined_painter_test.dart
 
             - name: Build web app
-              run: flutter build web --release --base-href="/Project/"
+              run: flutter build web --release
 
             - uses: bluefireteam/flutter-gh-pages@v7
               with:
-                baseHref: /team_project/
+                baseHref: /Project/
                 customArgs: "lib/main.dart"
