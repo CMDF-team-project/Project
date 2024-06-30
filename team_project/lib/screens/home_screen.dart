@@ -27,11 +27,31 @@ class _HomeScreenState extends State<HomeScreen>
     final model = Provider.of<MoodModel>(context);
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 245, 245, 239),
+        actions: [
+          IconButton(
+            onPressed: () {}, 
+            icon: const Icon(
+              Icons.brightness_6,
+              color: Color.fromARGB(255, 206, 203, 29),
+            ),
+          ),
+          IconButton(
+            icon: const Icon(
+              Icons.language,
+              color: Color.fromARGB(255, 34, 58, 192),  
+            ),
+            onPressed: () {
+            },
+          ),
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(height: 50),
+            const SizedBox(height: 90),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: TableCalendar(

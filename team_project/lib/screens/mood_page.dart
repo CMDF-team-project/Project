@@ -10,7 +10,11 @@ class AddMoodEntryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Mood Entry'),
+        backgroundColor: Color.fromARGB(255, 245, 245, 239),
+        title: const Text(
+          'Add Mood Entry',
+          style: TextStyle(color: Color.fromARGB(255, 11, 58, 4)),  
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
