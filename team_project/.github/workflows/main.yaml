@@ -1,75 +1,40 @@
-name: CI/CD Pipeline
+name: CI/CD Pipelines
 
 on:
-  push:
-    branches:
-      - ci/cd
-  pull_request:
-    branches:
-      - ci/cd
+    push:
+        branches:
+            - main
+
+    pull_request:
+        branches:
+            - main
 
 jobs:
-  format:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.22.1'
+            - name: Set up Flutter
+              uses: subosito/flutter-action@v2
+              with:
+                flutter-version: '3.22.1'
 
-      - name: Format code
-        run: flutter format --set-exit-if-changed .
+            - name: Install dependencies
+              run: flutter pub get
 
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+            - name: Analyze code
+              run: flutter analyze
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.22.1'
+            - name: Run tests
+              run: flutter test test/combined_painter_test.dart
+              run: flutter test test/no_connectivity_widget_test.dart
 
-      - name: Analyze code
-        run: flutter analyze
+            - name: Build Windows app
+              run: flutter build windows --release lib/main.dart
 
-      - name: Run tests
-        run: flutter test test/combined_painter_test.dart
-        run: flutter test test/no_connectivity_widget_test.dart
-
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.22.1'
-
-      - name: Build Windows app
-        run: flutter build windows --release
-
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.22.1'
-
-      - name: Build Web app
-        run: flutter build web
-
-      - uses: bluefireteam/flutter-gh-pages@v3
-        with:
-          baseHref: /team_project/
-          customArgs: "lib/main.dart"
+            - uses: bluefireteam/flutter-gh-pages@v7
+              with:
+                baseHref: /team_project/
+                customArgs: "lib/main.dart"
