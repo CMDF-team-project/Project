@@ -21,8 +21,13 @@ void showMoodDialog(BuildContext context, DateTime selectedDay) async {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Your mood on this day: $mood'),
-              Text('Description: $description'),
+              Text(
+                'Your mood on this day: $mood',
+                style: TextStyle(color: Color.fromARGB(255, 11, 58, 4)),
+                ),
+              Text('Description: $description',
+              style: TextStyle(color: Color.fromARGB(255, 11, 58, 4)),
+              ),
             ],
           ),
           actions: [
@@ -30,7 +35,8 @@ void showMoodDialog(BuildContext context, DateTime selectedDay) async {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Close'),
+              child: const Text('Close',
+              style: TextStyle(color: Color.fromARGB(255, 11, 58, 4)),),
             ),
           ],
         );
@@ -41,14 +47,17 @@ void showMoodDialog(BuildContext context, DateTime selectedDay) async {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Mood on $formattedDate'),
-          content: const Text('No notes for this day.'),
+          title: Text('Mood on $formattedDate',
+          style: TextStyle(color: Color.fromARGB(255, 11, 58, 4)),),
+          content: const Text('No notes for this day.',
+          style: TextStyle(color: Color.fromARGB(255, 11, 58, 4)),),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Close'),
+              child: const Text('Close',
+              style: TextStyle(color: Color.fromARGB(255, 11, 58, 4)),),
             ),
           ],
         );

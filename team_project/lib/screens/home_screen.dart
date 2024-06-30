@@ -147,7 +147,11 @@ class _HomeScreenState extends State<HomeScreen>
                 Icons.equalizer,
                 color: Colors.white,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (_) => const HomeScreen()),
+                );
+              },
             ),
             IconButton(
               icon: const Icon(

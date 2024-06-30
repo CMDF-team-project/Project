@@ -60,15 +60,20 @@ class MoodModel with ChangeNotifier {
   Future<void> saveMoodData(BuildContext context) async {
     if (_selectedMood == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select a mood')),
+        const SnackBar(backgroundColor: Color.fromARGB(255, 11, 58, 4), content: Text('Please select a mood',
+        style: TextStyle(color: Colors.white),)),
       );
       return;
     }
 
     if (await checkExistingEntry()) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Mood data already exists for today')),
+        const SnackBar(backgroundColor: Color.fromARGB(255, 11, 58, 4), content: Text('Mood data already exists for today',
+        style: TextStyle(color: Colors.white),)),
       );
+
+      _selectedMood = null;
+      _descriptionController.clear();
       return;
     }
 
@@ -82,7 +87,8 @@ class MoodModel with ChangeNotifier {
 
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Mood data saved successfully')),
+        const SnackBar(backgroundColor: Color.fromARGB(255, 11, 58, 4), content: Text('Mood data saved successfully',
+        style: TextStyle(color: Colors.white),)),
       );
 
       _selectedMood = null;

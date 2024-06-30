@@ -51,8 +51,12 @@ class AddMoodEntryScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
+                  style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll<Color>(Color.fromARGB(255, 43, 114, 28)),
+                    foregroundColor: MaterialStatePropertyAll<Color>(Colors.white),
+                  ),
                   onPressed: () => moodModel.saveMoodData(context),
-                  child: const Text('Save Mood'),
+                  child: Text('Save Mood'),
                 ),
               ],
             );

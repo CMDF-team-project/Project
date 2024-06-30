@@ -14,11 +14,28 @@ class NoConnectionState extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('No active connection'),
+            const Text(
+              'No active connection',
+              style: TextStyle(fontSize: 20),
+              ),
             const SizedBox(
               height: 20,
             ),
-            OutlinedButton(onPressed: onRetry, child: const Text('Retry'))
+            ElevatedButton(
+              onPressed: onRetry,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 43, 114, 28), 
+                foregroundColor: Colors.white,
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ), 
+              child: const Text(
+                'Retry',
+                style: TextStyle(color: Colors.white, fontSize: 20),  
+              )
+            )
           ],
         ),
       ),
