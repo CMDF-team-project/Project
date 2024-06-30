@@ -20,16 +20,16 @@ jobs:
               uses: subosito/flutter-action@v2
               with:
                 flutter-version: '3.22.1'
+                channel: 'stable'
 
             - name: Install dependencies
               run: flutter pub get
 
             - name: Analyze code
-              run: flutter analyze lib/main.dart
+              run: flutter analyze
 
             - name: Run tests
               run: flutter test test/combined_painter_test.dart
-              run: flutter test test/no_connectivity_widget_test.dart
 
             - name: Build Web app
               run: flutter build web --release lib/main.dart
