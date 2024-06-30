@@ -4,7 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 
 void showMoodDialog(BuildContext context, DateTime selectedDay) async {
   final FirebaseDatabase database = FirebaseDatabase.instance;
-  String formattedDate = DateFormat('d MMMM, yyyy').format(selectedDay);
+  String formattedDate = DateFormat('dd MMMM, yyyy').format(selectedDay);
   DatabaseReference ref = database.ref().child('mood_entries').child(formattedDate);
 
   DataSnapshot snapshot = await ref.get();
@@ -22,21 +22,27 @@ void showMoodDialog(BuildContext context, DateTime selectedDay) async {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Your mood on this day: $mood',
-                style: TextStyle(color: Color.fromARGB(255, 11, 58, 4)),
+                'Your mood on this day: $mood'
                 ),
-              Text('Description: $description',
-              style: TextStyle(color: Color.fromARGB(255, 11, 58, 4)),
+              Text('Description: $description'
               ),
             ],
           ),
           actions: [
             TextButton(
+              onPressed: () async {
+                await ref.remove();
+                Navigator.of(context).pop(); 
+              },
+              child: Text(
+                'Delete'
+              ),
+            ),
+            TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Close',
-              style: TextStyle(color: Color.fromARGB(255, 11, 58, 4)),),
+              child: const Text('Close'),
             ),
           ],
         );
@@ -47,17 +53,14 @@ void showMoodDialog(BuildContext context, DateTime selectedDay) async {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Mood on $formattedDate',
-          style: TextStyle(color: Color.fromARGB(255, 11, 58, 4)),),
-          content: const Text('No notes for this day.',
-          style: TextStyle(color: Color.fromARGB(255, 11, 58, 4)),),
+          title: Text('Mood on $formattedDate'),
+          content: const Text('No notes for this day.'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Close',
-              style: TextStyle(color: Color.fromARGB(255, 11, 58, 4)),),
+              child: const Text('Close'),
             ),
           ],
         );

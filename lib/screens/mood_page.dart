@@ -10,11 +10,8 @@ class AddMoodEntryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 245, 245, 239),
         title: const Text(
-          'Add Mood Entry',
-          style: TextStyle(color: Color.fromARGB(255, 11, 58, 4)),  
-        ),
+          'Add Mood Entry'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -24,6 +21,8 @@ class AddMoodEntryScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 DropdownButtonFormField<Mood>(
+                  dropdownColor: Color.fromARGB(255, 19, 73, 10),
+                  style: const TextStyle(color: Colors.white),
                   decoration: const InputDecoration(
                     labelText: 'Select your mood',
                     border: OutlineInputBorder(),
@@ -56,7 +55,7 @@ class AddMoodEntryScreen extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll<Color>(Color.fromARGB(255, 43, 114, 28)),
+                    backgroundColor: MaterialStatePropertyAll<Color>(Color.fromARGB(255, 11, 58, 4)),
                     foregroundColor: MaterialStatePropertyAll<Color>(Colors.white),
                   ),
                   onPressed: () => moodModel.saveMoodData(context),

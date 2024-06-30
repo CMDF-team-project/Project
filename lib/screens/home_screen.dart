@@ -18,20 +18,18 @@ class _HomeScreenState extends State<HomeScreen>
   with ConnectionAwareMixin<HomeScreen>, DefaultConnectionAwareMixin<HomeScreen>
   implements RestartableStateInterface {
 
-  Color _getCellTextColor(Color backgroundColor) {
-    return backgroundColor.computeLuminance() > 0.5 ? Colors.black : Colors.white;
-  }
-
   @override
   Widget buildPage(BuildContext context) {
     final model = Provider.of<MoodModel>(context);
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 245, 245, 239),
+        
         actions: [
           IconButton(
-            onPressed: () {}, 
+            onPressed: () {
+              model.toggleDarkMode();
+            }, 
             icon: const Icon(
               Icons.brightness_6,
               color: Color.fromARGB(255, 206, 203, 29),
@@ -71,7 +69,6 @@ class _HomeScreenState extends State<HomeScreen>
                   formatButtonVisible: false,
                   titleCentered: true,
                   titleTextStyle: TextStyle(
-                    color: Colors.black,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
@@ -83,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen>
                       future: model.getMoodColorByDate(date),
                       builder: (context, snapshot) {
                         Color backgroundColor = snapshot.data ?? Color.fromARGB(255, 39, 165, 66);
-                        Color textColor = _getCellTextColor(backgroundColor);
+                        Color textColor = Colors.white;
 
                         return Container(
                           decoration: BoxDecoration(
@@ -151,7 +148,6 @@ class _HomeScreenState extends State<HomeScreen>
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Color.fromARGB(255, 43, 114, 28).withOpacity(0.5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [

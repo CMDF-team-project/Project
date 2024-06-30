@@ -6,6 +6,7 @@ import 'package:team_project/mood.dart';
 class MoodModel with ChangeNotifier {
   DateTime? _selectedDay;
   Map<String, dynamic> _moodData = {};
+  bool _isDarkMode = false;
   Mood? _selectedMood;
   final TextEditingController _descriptionController = TextEditingController();
   DatabaseReference _moodEntriesRef = FirebaseDatabase.instance.ref().child('mood_entries');
@@ -13,7 +14,13 @@ class MoodModel with ChangeNotifier {
   DateTime? get selectedDay => _selectedDay;
   Map<String, dynamic> get moodData => _moodData;
   Mood? get selectedMood => _selectedMood;
-  TextEditingController get descriptionController => _descriptionController;
+  TextEditingController get descriptionController => _descriptionController; 
+  bool get isDarkMode => _isDarkMode;
+
+  void toggleDarkMode() {
+    _isDarkMode = !_isDarkMode;
+    notifyListeners();
+  }
 
   void selectDay(DateTime? selectedDay) {
     _selectedDay = selectedDay;
@@ -36,7 +43,7 @@ class MoodModel with ChangeNotifier {
 
   Future<bool> checkExistingEntry() async {
     DateTime now = DateTime.now();
-    String today = DateFormat('d MMMM, yyyy').format(now);
+    String today = DateFormat('dd MMMM, yyyy').format(now);
 
     DataSnapshot snapshot = await _moodEntriesRef.get();
 
@@ -48,7 +55,7 @@ class MoodModel with ChangeNotifier {
   }
 
   Future<Color> getMoodColorByDate(DateTime date) async {
-    String formattedDate = DateFormat('d MMMM, yyyy').format(date);
+    String formattedDate = DateFormat('dd MMMM, yyyy').format(date);
     DataSnapshot snapshot = await _moodEntriesRef.child(formattedDate).get();
     if (snapshot.exists) {
       Map<dynamic, dynamic> data = snapshot.value as Map<dynamic, dynamic>;
@@ -66,6 +73,7 @@ class MoodModel with ChangeNotifier {
       return;
     }
 
+    print(await checkExistingEntry());
     if (await checkExistingEntry()) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(backgroundColor: Color.fromARGB(255, 11, 58, 4), content: Text('Mood data already exists for today',
@@ -97,6 +105,26 @@ class MoodModel with ChangeNotifier {
       notifyListeners();
     } catch (e) {
       print('Error saving mood data: $e');
+    }
+  }
+  Future<void> deleteMoodDataByDate(DateTime date, BuildContext context) async {
+    try {
+      String formattedDate = DateFormat('dd MMMM, yyyy').format(date);
+      await _moodEntriesRef.child(formattedDate).remove();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Color.fromARGB(255, 11, 58, 4),
+          content: Text(
+            'Mood data deleted successfully',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      );
+
+      notifyListeners();
+    } catch (e) {
+      print('Error deleting mood data: $e');
     }
   }
 }
