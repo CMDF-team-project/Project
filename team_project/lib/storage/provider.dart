@@ -1,17 +1,18 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:team_project/mood.dart';
 
 class MoodModel with ChangeNotifier {
   DateTime? _selectedDay;
   Map<String, dynamic> _moodData = {};
-  String? _selectedMood;
+  Mood? _selectedMood;
   final TextEditingController _descriptionController = TextEditingController();
   DatabaseReference _moodEntriesRef = FirebaseDatabase.instance.ref().child('mood_entries');
 
   DateTime? get selectedDay => _selectedDay;
   Map<String, dynamic> get moodData => _moodData;
-  String? get selectedMood => _selectedMood;
+  Mood? get selectedMood => _selectedMood;
   TextEditingController get descriptionController => _descriptionController;
 
   void selectDay(DateTime? selectedDay) {
@@ -24,7 +25,7 @@ class MoodModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void setSelectedMood(String? mood) {
+  void setSelectedMood(Mood? mood) {
     _selectedMood = mood;
     notifyListeners();
   }
@@ -46,6 +47,16 @@ class MoodModel with ChangeNotifier {
     return false;
   }
 
+  Future<Color> getMoodColorByDate(DateTime date) async {
+    String formattedDate = DateFormat('d MMMM, yyyy').format(date);
+    DataSnapshot snapshot = await _moodEntriesRef.child(formattedDate).get();
+    if (snapshot.exists) {
+      Map<dynamic, dynamic> data = snapshot.value as Map<dynamic, dynamic>;
+      return getColorByName(data['mood']);
+    }
+    return Color.fromARGB(255, 43, 114, 28);
+  }
+
   Future<void> saveMoodData(BuildContext context) async {
     if (_selectedMood == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -64,10 +75,11 @@ class MoodModel with ChangeNotifier {
     try {
       String formattedDate = DateFormat('dd MMMM, yyyy').format(DateTime.now());
       await _moodEntriesRef.child(formattedDate).set({
-        'mood': _selectedMood,
+        'mood': _selectedMood!.name,
         'description': _descriptionController.text,
         'date': formattedDate,
       });
+
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Mood data saved successfully')),
@@ -75,11 +87,9 @@ class MoodModel with ChangeNotifier {
 
       _selectedMood = null;
       _descriptionController.clear();
+
       notifyListeners();
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to save mood data: $e')),
-      );
       print('Error saving mood data: $e');
     }
   }

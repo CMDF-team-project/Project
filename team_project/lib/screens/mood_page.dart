@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:team_project/mood.dart';
 import 'package:team_project/storage/provider.dart';
 
-class MoodInputScreen extends StatelessWidget {
-  const MoodInputScreen({Key? key});
+class AddMoodEntryScreen extends StatelessWidget {
+  const AddMoodEntryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,29 +17,42 @@ class MoodInputScreen extends StatelessWidget {
         child: Consumer<MoodModel>(
           builder: (context, moodModel, child) {
             return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                DropdownButton<String>(
-                  hint: const Text('Select your mood'),
-                  value: moodModel.selectedMood?.isEmpty ?? true ? null : moodModel.selectedMood,
-                  onChanged: (String? newValue) {
+                DropdownButtonFormField<Mood>(
+                  decoration: const InputDecoration(
+                    labelText: 'Select your mood',
+                    border: OutlineInputBorder(),
+                  ),
+                  value: moodModel.selectedMood,
+                  onChanged: (Mood? newValue) {
                     moodModel.setSelectedMood(newValue);
                   },
-                  items: <String>['Happy', 'Sad', 'Neutral', 'Excited', 'Angry']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
+                  items: moods.map((Mood mood) {
+                    return DropdownMenuItem<Mood>(
+                      value: mood,
+                      child: Row(
+                        children: [
+                          Icon(Icons.circle, color: mood.color),
+                          const SizedBox(width: 8),
+                          Text(mood.name),
+                        ],
+                      ),
                     );
                   }).toList(),
                 ),
+                const SizedBox(height: 20),
                 TextField(
                   controller: moodModel.descriptionController,
-                  decoration: const InputDecoration(labelText: 'Description'),
+                  decoration: const InputDecoration(
+                    labelText: 'Describe your day (* ^ ω ^)',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () => moodModel.saveMoodData(context),
-                  child: const Text('Save Mood Data'),
+                  child: const Text('Save Mood'),
                 ),
               ],
             );

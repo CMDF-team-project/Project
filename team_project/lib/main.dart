@@ -9,11 +9,10 @@ import 'package:team_project/storage/provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 
-late final ConnectivityService connectionService;
+late ConnectivityService connectionService;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
