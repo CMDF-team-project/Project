@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(height: 90),
+            const SizedBox(height: 40),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: TableCalendar(
@@ -160,7 +160,11 @@ class _HomeScreenState extends State<HomeScreen>
                 Icons.home,
                 color: Colors.white,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (_) => const HomeScreen()),
+                );
+              },
             ),
             IconButton(
               icon: const Icon(
@@ -168,9 +172,7 @@ class _HomeScreenState extends State<HomeScreen>
                 color: Colors.white,
               ),
               onPressed: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (_) => const HomeScreen()),
-                );
+                
               },
             ),
             IconButton(
