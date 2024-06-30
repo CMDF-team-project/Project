@@ -32,7 +32,7 @@ jobs:
               run: flutter test test/combined_painter_test.dart
 
             - name: Build Web app
-              run: flutter build web --release lib/main.dart
+              run: flutter build web --release --dart define="app.title='My App'" 
 
             - uses: bluefireteam/flutter-gh-pages@v7
               with:
