@@ -21,10 +21,10 @@ Mood Tracker is a Flutter application that helps users to record and monitor the
 - View mood entries on a calendar.
 - Toggle between light and dark themes.
 - Firebase integration for storing and retrieving mood data.
+- Changing user name in the profile.
+- Changing user date of birth.
 
 ## Screenshots
-
-### Splash Screen GIF
 
 ### Home Screen
 
