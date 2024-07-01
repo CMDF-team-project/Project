@@ -8,7 +8,6 @@ import 'package:team_project/providers/locale_provider.dart';
 import 'package:team_project/screens/mood_page.dart';
 import 'package:team_project/providers/provider.dart';
 import 'package:team_project/app_localizations.dart' as app_localizations;
-import 'package:team_project/screens/profile.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -27,6 +26,14 @@ class _HomeScreenState extends State<HomeScreen>
     final model = Provider.of<MoodModel>(context);
     final localeProvider = Provider.of<LocaleProvider>(context);
     final localizations = app_localizations.AppLocalizations.of(context)!;
+
+    String _customDateFormat(DateTime date, String localeCode) {
+      final day = DateFormat.d(localeCode).format(date);
+      final monthName = DateFormat.MMMM(localeCode).format(date);
+      final capitalizedMonth = '${monthName[0].toUpperCase()}${monthName.substring(1)}';
+      final year = DateFormat.y(localeCode).format(date);
+      return '$day $capitalizedMonth, $year'; 
+  }
 
     return Scaffold(
       appBar: AppBar(
@@ -98,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen>
                     fontWeight: FontWeight.bold,
                   ),
                   titleTextFormatter: (date, locale) {
-                    return localizations.translate('calendar_header') ?? '';
+                    return _customDateFormat(date, localeProvider.locale.languageCode);
                   },
                 ),
                 daysOfWeekHeight: 30,
@@ -202,12 +209,7 @@ class _HomeScreenState extends State<HomeScreen>
                 Icons.settings,
                 color: Colors.white,
               ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfilePage()),
-);
-              },
+              onPressed: () {},
             ),
             IconButton(
               icon: const Icon(
