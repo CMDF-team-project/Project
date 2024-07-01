@@ -20,6 +20,7 @@ Home Screen. Light Theme
 ![Home Screen. Light Theme](screenshots/photo_2024-07-01_17-31-48.jpg)
 
 Home Screen. Dark Theme
+
 ![Home Screen. Dark Theme](screenshots/photo_2024-07-01_17-31-41.jpg)
 
 ### Mood Input Screen
@@ -36,7 +37,7 @@ Types of Mood
 
 Data on this day is already exists
 
-![Data on this day is already exists](screenshots/photo_2024-07-01_17-31-40(3).jpg)
+![Data on this day is already exists](screenshots/photo_2024-07-01_17-31-40%20(3).jpg)
 
 Mood is not selected
 
