@@ -27,10 +27,18 @@ class AddMoodEntryScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 DropdownButtonFormField<Mood>(
-                  dropdownColor: Color.fromARGB(255, 19, 73, 10),
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    labelText: localizations.translate('selectMoodLabel') ?? 'Select Mood',
+                  dropdownColor: Color.fromARGB(255, 196, 238, 189),
+                  decoration: const InputDecoration(
+                    filled: true,
+                    fillColor: Color.fromARGB(255, 219, 248, 214),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color.fromARGB(255, 74, 148, 84)),
+                    ),
+                    labelText: 'Select your mood',
+                    labelStyle: TextStyle(color: Color.fromARGB(255, 135, 173, 127)),
                     border: OutlineInputBorder(),
                   ),
                   value: moodModel.selectedMood,
@@ -44,7 +52,8 @@ class AddMoodEntryScreen extends StatelessWidget {
                         children: [
                           Icon(Icons.circle, color: mood.color),
                           const SizedBox(width: 8),
-                          Text(mood.name),
+                          Text(mood.name,
+                              style: TextStyle(color: Color.fromARGB(255, 12, 48, 5))),
                         ],
                       ),
                     );
@@ -52,19 +61,27 @@ class AddMoodEntryScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 TextField(
+                  style: TextStyle(color: Color.fromARGB(255, 12, 48, 5)),
                   controller: moodModel.descriptionController,
-                  decoration: InputDecoration(
-                    labelText: localizations.translate('describeDayLabel') ?? 'Describe Day',
+                  decoration: const InputDecoration(
+                    filled: true,
+                    fillColor: Color.fromARGB(255, 219, 248, 214),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color.fromARGB(255, 74, 148, 84)),
+                    ),
+                    labelText: 'Describe your day (* ^ ω ^)',
+                    labelStyle: TextStyle(color: Color.fromARGB(255, 135, 173, 127)),
                     border: OutlineInputBorder(),
                   ),
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Color.fromARGB(255, 11, 58, 4)),
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
+                  style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll<Color>(Color.fromARGB(255, 23, 100, 11)),
+                    foregroundColor: MaterialStatePropertyAll<Color>(Colors.white),
                   ),
                   onPressed: () => moodModel.saveMoodData(context),
                   child: Text(localizations.translate('saveMoodButton') ?? 'Save'),

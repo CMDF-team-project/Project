@@ -42,16 +42,15 @@ class MyApp extends StatelessWidget {
     final localeProvider = Provider.of<LocaleProvider>(context);
 
     ThemeData darkTheme = ThemeData.dark().copyWith(
-      scaffoldBackgroundColor: const Color.fromARGB(255, 39, 46, 37),
-      appBarTheme: const AppBarTheme(
-        backgroundColor: Color.fromARGB(255, 39, 46, 37),
-        titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
+      scaffoldBackgroundColor: Color.fromARGB(255, 40, 51, 37),
+      appBarTheme: AppBarTheme(backgroundColor: Color.fromARGB(255, 40, 51, 37),
+      titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
       ),
-      bottomAppBarTheme: const BottomAppBarTheme(color: Color.fromARGB(255, 17, 20, 16)),
-      textTheme: const TextTheme(
+      bottomAppBarTheme: BottomAppBarTheme(color: Color.fromARGB(255, 16, 19, 15)),
+      textTheme: TextTheme(
         bodyLarge: TextStyle(color: Colors.white),
         bodyMedium: TextStyle(color: Colors.white),
-        bodySmall: TextStyle(color: Colors.white),
+        //bodySmall: TextStyle(color: Colors.white),
         titleMedium: TextStyle(color: Colors.white),
         titleSmall: TextStyle(color: Colors.white),
         titleLarge: TextStyle(color: Colors.white),

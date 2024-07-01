@@ -6,7 +6,7 @@ import 'package:team_project/connectivity/core.dart';
 import 'package:team_project/dialogue/mood_dialogue.dart';
 import 'package:team_project/locale_provider.dart';
 import 'package:team_project/screens/mood_page.dart';
-import 'package:team_project/storage/provider.dart';
+import 'package:team_project/provider.dart';
 import 'package:team_project/app_localizations.dart' as app_localizations;
 
 
