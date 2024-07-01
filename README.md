@@ -66,10 +66,6 @@ Mood is not selected
 
 The app uses Firebase Realtime Database to store mood entries.
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ## Contact
 
 If you have any questions or suggestions, feel free to reach out to one of the team members at e.zagurskih@innopolis.university, o.novoselova@innopolis.university.
