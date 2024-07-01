@@ -55,6 +55,7 @@ class AddMoodEntryScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 TextField(
+                  style: TextStyle(color: Color.fromARGB(255, 12, 48, 5)),
                   controller: moodModel.descriptionController,
                   decoration: const InputDecoration(
                     filled: true,
