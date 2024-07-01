@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:team_project/connectivity/core.dart';
 import 'package:team_project/dialogue/mood_dialogue.dart';
 import 'package:team_project/screens/mood_page.dart';
-import 'package:team_project/storage/provider.dart';
+import 'package:team_project/provider.dart';
 
 
 class HomeScreen extends StatefulWidget {
