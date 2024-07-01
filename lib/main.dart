@@ -6,12 +6,12 @@ import 'package:team_project/connectivity/connectivity_service.dart';
 import 'package:team_project/firebase_options.dart';
 import 'package:team_project/l10n/l10n.dart';
 import 'package:team_project/screens/home_screen.dart';
-import 'package:team_project/storage/provider.dart';
+import 'package:team_project/providers/provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:team_project/app_localizations.dart' as app_localizations;
-import 'package:team_project/locale_provider.dart';
+import 'package:team_project/providers/locale_provider.dart';
 
 late ConnectivityService connectionService;
 
@@ -25,8 +25,8 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => MoodModel()),
         ChangeNotifierProvider(create: (context) => LocaleProvider()),
+        ChangeNotifierProvider(create: (context) => MoodModel()),
       ],
       child: const MyApp(),
     ),

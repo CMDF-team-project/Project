@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:team_project/app_localizations.dart';
-import 'package:team_project/locale_provider.dart';
 import 'package:team_project/mood.dart';
-import 'package:team_project/storage/provider.dart';
+import 'package:team_project/providers/provider.dart';
+import 'package:team_project/app_localizations.dart';
+import 'package:team_project/providers/locale_provider.dart';
 import 'package:team_project/app_localizations.dart' as app_localizations;
 
 class AddMoodEntryScreen extends StatelessWidget {
-  const AddMoodEntryScreen({Key? key});
+  const AddMoodEntryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     var localizedStrings = AppLocalizations.of(context);
     final localeProvider = Provider.of<LocaleProvider>(context);
-     final localizations = app_localizations.AppLocalizations.of(context)!;
-
+    final localizations = app_localizations.AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-         title: Text(localizations.translate('addMoodEntry') ?? 'Add Mood Entry'),
+        title: Text(localizations.translate('addMoodEntry') ?? 'Add Mood Entry'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -28,7 +27,7 @@ class AddMoodEntryScreen extends StatelessWidget {
               children: [
                 DropdownButtonFormField<Mood>(
                   dropdownColor: Color.fromARGB(255, 196, 238, 189),
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     filled: true,
                     fillColor: Color.fromARGB(255, 219, 248, 214),
                     focusedBorder: OutlineInputBorder(
@@ -37,7 +36,7 @@ class AddMoodEntryScreen extends StatelessWidget {
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Color.fromARGB(255, 74, 148, 84)),
                     ),
-                    labelText: 'Select your mood',
+                    labelText: localizations.translate('selectMoodLabel') ?? 'Select Mood',
                     labelStyle: TextStyle(color: Color.fromARGB(255, 135, 173, 127)),
                     border: OutlineInputBorder(),
                   ),
@@ -63,7 +62,7 @@ class AddMoodEntryScreen extends StatelessWidget {
                 TextField(
                   style: TextStyle(color: Color.fromARGB(255, 12, 48, 5)),
                   controller: moodModel.descriptionController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     filled: true,
                     fillColor: Color.fromARGB(255, 219, 248, 214),
                     focusedBorder: OutlineInputBorder(
@@ -72,7 +71,7 @@ class AddMoodEntryScreen extends StatelessWidget {
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Color.fromARGB(255, 74, 148, 84)),
                     ),
-                    labelText: 'Describe your day (* ^ ω ^)',
+                    labelText: localizations.translate('describeDayLabel') ?? 'Describe Day',
                     labelStyle: TextStyle(color: Color.fromARGB(255, 135, 173, 127)),
                     border: OutlineInputBorder(),
                   ),
