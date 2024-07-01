@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:provider/provider.dart';
 import 'package:team_project/connectivity/core.dart';
 import 'package:team_project/dialogue/mood_dialogue.dart';
-import 'package:team_project/locale_provider.dart';
 import 'package:team_project/screens/mood_page.dart';
 import 'package:team_project/provider.dart';
-import 'package:team_project/app_localizations.dart' as app_localizations;
 
 
 class HomeScreen extends StatefulWidget {
@@ -24,12 +21,10 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget buildPage(BuildContext context) {
     final model = Provider.of<MoodModel>(context);
-    final localeProvider = Provider.of<LocaleProvider>(context);
-    final localizations = app_localizations.AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(localizations.translate('home_title') ?? 'Home'),
+        
         actions: [
           IconButton(
             onPressed: () {
@@ -46,24 +41,6 @@ class _HomeScreenState extends State<HomeScreen>
               color: Color.fromARGB(255, 34, 58, 192),  
             ),
             onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: Text(localizations.translate('select_language') ?? 'Select Language'),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: L10n.all.map((locale) {
-                      return ListTile(
-                        title: Text(locale.languageCode.toUpperCase()),
-                        onTap: () {
-                          localeProvider.setLocale(locale);
-                          Navigator.of(context).pop();
-                        },
-                      );
-                    }).toList(),
-                  ),
-                ),
-              );
             },
           ),
         ],
@@ -80,7 +57,6 @@ class _HomeScreenState extends State<HomeScreen>
                 lastDay: DateTime.utc(2100, 12, 31),
                 focusedDay: model.selectedDay ?? DateTime.now(),
                 calendarFormat: CalendarFormat.month,
-                locale: localeProvider.locale.languageCode,
                 selectedDayPredicate: (day) {
                   return isSameDay(model.selectedDay, day);
                 },
@@ -89,31 +65,21 @@ class _HomeScreenState extends State<HomeScreen>
                   showMoodDialog(context, selectedDay);
                 },
                 onPageChanged: (focusedDay) {},
-                headerStyle: HeaderStyle(
+                headerStyle: const HeaderStyle(
                   formatButtonVisible: false,
                   titleCentered: true,
-                  titleTextStyle: const TextStyle(
+                  titleTextStyle: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
-                  titleTextFormatter: (date, locale) {
-                    return localizations.translate('calendar_header') ?? '';
-                  },
                 ),
                 daysOfWeekHeight: 30,
-                daysOfWeekStyle: DaysOfWeekStyle(
-                  weekdayStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  weekendStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.red),
-                  dowTextFormatter: (date, locale) {
-                    return DateFormat.E(localeProvider.locale.languageCode).format(date);
-                  },
-                ),
                 calendarBuilders: CalendarBuilders(
                   defaultBuilder: (context, date, _) {
                     return FutureBuilder<Color>(
                       future: model.getMoodColorByDate(date),
                       builder: (context, snapshot) {
-                        Color backgroundColor = snapshot.data ?? const Color.fromARGB(255, 39, 165, 66);
+                        Color backgroundColor = snapshot.data ?? Color.fromARGB(255, 39, 165, 66);
                         Color textColor = Colors.white;
 
                         return Container(
@@ -194,6 +160,15 @@ class _HomeScreenState extends State<HomeScreen>
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (_) => const HomeScreen()),
                 );
+              },
+            ),
+            IconButton(
+              icon: const Icon(
+                Icons.equalizer,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                
               },
             ),
             IconButton(
