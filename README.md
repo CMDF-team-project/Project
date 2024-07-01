@@ -15,18 +15,30 @@ Mood Tracker is a Flutter application that helps users to record and monitor the
 
 ### Home Screen
 
+Home Screen. Light Theme
+
 ![Home Screen. Light Theme](screenshots/photo_2024-07-01_17-31-48.jpg)
+
+Home Screen. Dark Theme
 ![Home Screen. Dark Theme](screenshots/photo_2024-07-01_17-31-41.jpg)
 
 ### Mood Input Screen
 
+First View on Mood Input Screen
+
 ![First View on Mood Input Screen](screenshots/photo_2024-07-01_17-31-40.jpg)
+
+Types of Mood
 
 ![Types of Mood](screenshots/photo_2024-07-01_17-31-40%20(2).jpg)
 
 ### Mood Input Screen Warnings
 
-![Data on this day is already exists](screenshots/photo_2024-07-01_17-31-40 (3).jpg)
+Data on this day is already exists
+
+![Data on this day is already exists](screenshots/photo_2024-07-01_17-31-40(3).jpg)
+
+Mood is not selected
 
 ![Mood is not selected](screenshots/photo_2024-07-01_17-31-40%20(4).jpg)
 
