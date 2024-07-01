@@ -44,3 +44,4 @@ flutter:
   assets:
     - lib/l10n/intl_en.json
     - lib/l10n/intl_ru.json
+    - lib/images/default_photo.jpg

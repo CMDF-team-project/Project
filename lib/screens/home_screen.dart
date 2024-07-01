@@ -8,6 +8,7 @@ import 'package:team_project/providers/locale_provider.dart';
 import 'package:team_project/screens/mood_page.dart';
 import 'package:team_project/providers/provider.dart';
 import 'package:team_project/app_localizations.dart' as app_localizations;
+import 'package:team_project/screens/profile.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -201,7 +202,12 @@ class _HomeScreenState extends State<HomeScreen>
                 Icons.settings,
                 color: Colors.white,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfilePage()),
+);
+              },
             ),
             IconButton(
               icon: const Icon(
