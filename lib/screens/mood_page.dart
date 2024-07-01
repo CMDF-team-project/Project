@@ -13,7 +13,7 @@ class AddMoodEntryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var localizedStrings = AppLocalizations.of(context);
     final localeProvider = Provider.of<LocaleProvider>(context);
-     final localizations = app_localizations.AppLocalizations.of(context)!;
+    final localizations = app_localizations.AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
