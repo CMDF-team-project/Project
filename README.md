@@ -26,7 +26,7 @@ Mood Tracker is a Flutter application that helps users to record and monitor the
 
 ### Mood Input Screen Warnings
 
-![Data on this day is already exists](screenshots\photo_2024-07-01_17-31-40 (3).jpg)
+![Data on this day is already exists](screenshots/photo_2024-07-01_17-31-40 (3).jpg)
 
 ![Mood is not selected](screenshots/photo_2024-07-01_17-31-40%20(4).jpg)
 
@@ -59,4 +59,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contact
 
-If you have any questions or suggestions, feel free to reach out to one of the team members at [e.zagurskih@innopolis.university], [o.novoselova].
+If you have any questions or suggestions, feel free to reach out to one of the team members at e.zagurskih@innopolis.university, o.novoselova@innopolis.university.
