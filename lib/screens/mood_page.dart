@@ -14,6 +14,7 @@ class AddMoodEntryScreen extends StatelessWidget {
     var localizedStrings = AppLocalizations.of(context);
     final localeProvider = Provider.of<LocaleProvider>(context);
     final localizations = app_localizations.AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(localizations.translate('addMoodEntry') ?? 'Add Mood Entry'),

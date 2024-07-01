@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
+import 'package:team_project/app_localizations.dart' as app_localizations;
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -10,14 +11,23 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String userName = 'User Name';
+  late String userName;
   DateTime? dateOfBirth;
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final localizations = app_localizations.AppLocalizations.of(context)!;
+    userName = localizations.translate('userName') ?? 'User Name';
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final localizations = app_localizations.AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Profile'),
+        title: Text(localizations.translate('userProfile') ?? 'User Profile'),
       ),
       body: Center(
         child: Column(
@@ -38,7 +48,7 @@ class _ProfilePageState extends State<ProfilePage> {
             if (dateOfBirth != null) ...[
               const SizedBox(height: 10),
               Text(
-                'Date of Birth: ${dateOfBirth!.toLocal().toIso8601String().split('T').first}',
+                '${localizations.translate('dateOfBirth')}: ${dateOfBirth!.toLocal().toIso8601String().split('T').first}',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
@@ -54,7 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
               onPressed: () {
                 _changeNickname(context);
               },
-              child: Text('Change Nickname'),
+              child: Text(localizations.translate('changeNickname') ?? 'Change Nickname'),
             ),
             const SizedBox(height: 10),
             ElevatedButton(
@@ -65,7 +75,7 @@ class _ProfilePageState extends State<ProfilePage> {
               onPressed: () {
                 _changeDateOfBirth(context);
               },
-              child: Text('Change Date of Birth'),
+              child: Text(localizations.translate('changeDateOfBirth') ?? 'Change Date of Birth'),
             ),
           ],
         ),
@@ -75,31 +85,32 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void _changeNickname(BuildContext context) {
     final TextEditingController nicknameController = TextEditingController();
+    final localizations = app_localizations.AppLocalizations.of(context)!;
     
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Change Nickname'),
+          title: Text(localizations.translate('changeNickname') ?? 'Change Nickname'),
           content: TextField(
             controller: nicknameController,
-            decoration: InputDecoration(hintText: 'Enter new nickname'),
+            decoration: InputDecoration(hintText: localizations.translate('enterNewNickname') ?? 'Enter new nickname'),
           ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: Text(localizations.translate('cancel') ?? 'Cancel'),
             ),
             TextButton(
               onPressed: () {
                 setState(() {
-                  userName = nicknameController.text;
+                  userName = nicknameController.text.isNotEmpty ? nicknameController.text : localizations.translate('userName') ?? 'User Name';
                 });
                 Navigator.of(context).pop();
               },
-              child: Text('Save'),
+              child: Text(localizations.translate('save') ?? 'Save'),
             ),
           ],
         );
@@ -108,11 +119,79 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _changeDateOfBirth(BuildContext context) async {
-    DateTime? selectedDate = await showDatePicker(
+    DateTime? selectedDate = await showDialog(
       context: context,
-      initialDate: dateOfBirth ?? DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
+      builder: (context) {
+        DateTime focusedDay = dateOfBirth ?? DateTime.now();
+        DateTime selectedDay = focusedDay;
+
+        return AlertDialog(
+          title: Text(app_localizations.AppLocalizations.of(context)!.translate('changeDateOfBirth') ?? 'Change Date of Birth'),
+          content: SizedBox(
+            height: 400,
+            child: TableCalendar(
+              firstDay: DateTime.utc(1900, 1, 1),
+              lastDay: DateTime.utc(2100, 12, 31),
+              focusedDay: focusedDay,
+              selectedDayPredicate: (day) {
+                return isSameDay(selectedDay, day);
+              },
+              onDaySelected: (newSelectedDay, newFocusedDay) {
+                setState(() {
+                  selectedDay = newSelectedDay;
+                  focusedDay = newFocusedDay;
+                });
+                Navigator.of(context).pop(newSelectedDay);
+              },
+              headerStyle: HeaderStyle(
+                formatButtonVisible: false,
+                titleCentered: true,
+                titleTextStyle: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              daysOfWeekStyle: DaysOfWeekStyle(
+                weekdayStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                weekendStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.red),
+                dowTextFormatter: (date, locale) {
+                  return DateFormat.E(locale).format(date);
+                },
+              ),
+              calendarStyle: CalendarStyle(
+                defaultDecoration: BoxDecoration(
+                  color: Color.fromARGB(255, 39, 165, 66).withOpacity(0.5),
+                  border: Border.all(color: Colors.white, width: 0.5),
+                ),
+                todayDecoration: BoxDecoration(
+                  color: Color.fromARGB(255, 39, 165, 66).withOpacity(0.9),
+                  border: Border.all(color: Colors.white, width: 0.5),
+                ),
+                selectedDecoration: BoxDecoration(
+                  color: Color.fromARGB(255, 39, 165, 66),
+                  border: Border.all(color: Colors.white, width: 0.5),
+                ),
+                weekendDecoration: BoxDecoration(
+                  color: Color.fromARGB(255, 39, 165, 66).withOpacity(0.5),
+                  border: Border.all(color: Colors.white, width: 0.5),
+                ),
+                defaultTextStyle: TextStyle(color: Colors.white),
+                todayTextStyle: TextStyle(color: Colors.white),
+                selectedTextStyle: TextStyle(color: Colors.white),
+                weekendTextStyle: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(app_localizations.AppLocalizations.of(context)!.translate('cancel') ?? 'Cancel'),
+            ),
+          ],
+        );
+      },
     );
 
     if (selectedDate != null) {

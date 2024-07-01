@@ -12,6 +12,14 @@
     "wed": "Wed",
     "thu": "Thu",
     "fri": "Fri",
-    "sat": "Sat"
+    "sat": "Sat",
+    "userProfile": "User Profile",
+    "userName": "User Name",
+    "dateOfBirth": "Date of Birth",
+    "changeNickname": "Change Nickname",
+    "changeDateOfBirth": "Change Date of Birth",
+    "enterNewNickname": "Enter new nickname",
+    "cancel": "Cancel",
+    "save": "Save"
 }
   

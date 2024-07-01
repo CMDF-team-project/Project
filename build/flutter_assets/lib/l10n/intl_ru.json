@@ -12,6 +12,14 @@
     "wed": "Ср",
     "thu": "Чт",
     "fri": "Пт",
-    "sat": "Сб"
+    "sat": "Сб",
+    "userProfile": "Профиль пользователя",
+    "userName": "Имя пользователя",
+    "dateOfBirth": "Дата рождения",
+    "changeNickname": "Изменить имя",
+    "changeDateOfBirth": "Изменить дату рождения",
+    "enterNewNickname": "Введите новое имя",
+    "cancel": "Отмена",
+    "save": "Сохранить"
 }
   
