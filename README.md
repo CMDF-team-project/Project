@@ -36,6 +36,14 @@ Home Screen. Dark Theme
 
 ![Home Screen. Dark Theme](screenshots/photo_2024-07-01_17-31-41.jpg)
 
+### Profile Screen
+
+![Profile Screen](screenshots/profile.jpg)
+
+### No connection Screen
+
+![Connection Screen](screenshots/connection.jpg)
+
 ### Mood Input Screen
 
 First View on Mood Input Screen
