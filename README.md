@@ -131,7 +131,7 @@ Before you begin, ensure you have met the following requirements:
 
 ## Code Structure
 - 'main.dart': Entry point of the application.
-- 'provider.dart': Contains the business logic for handling mood data.
+- 'providers': Contains the business logic for handling mood data, localisation for English and Russian languages.
 - 'screens' and 'additional_screens': Contains the UI screens of the application.
 - 'dialogue/mood_dialogue.dart': Contains a dialog to show mood data in the calendar on the Home Screen.
 - 'custom painter': Contains custom paint object for the Splash Screen. 
