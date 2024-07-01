@@ -4,10 +4,14 @@ import 'package:provider/provider.dart';
 import 'package:team_project/additional_screens/splash_screen.dart';
 import 'package:team_project/connectivity/connectivity_service.dart';
 import 'package:team_project/firebase_options.dart';
+import 'package:team_project/l10n/l10n.dart';
 import 'package:team_project/screens/home_screen.dart';
 import 'package:team_project/storage/provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:team_project/app_localizations.dart' as app_localizations;
+import 'package:team_project/locale_provider.dart';
 
 late ConnectivityService connectionService;
 
@@ -19,8 +23,11 @@ Future<void> main() async {
 
   connectionService = await ConnectivityService(Connectivity()).init();
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => MoodModel(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => MoodModel()),
+        ChangeNotifierProvider(create: (context) => LocaleProvider()),
+      ],
       child: const MyApp(),
     ),
   );
@@ -32,13 +39,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Provider.of<MoodModel>(context).isDarkMode;
+    final localeProvider = Provider.of<LocaleProvider>(context);
+
     ThemeData darkTheme = ThemeData.dark().copyWith(
-      scaffoldBackgroundColor: Color.fromARGB(255, 39, 46, 37),
-      appBarTheme: AppBarTheme(backgroundColor: Color.fromARGB(255, 39, 46, 37),
-      titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
+      scaffoldBackgroundColor: const Color.fromARGB(255, 39, 46, 37),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Color.fromARGB(255, 39, 46, 37),
+        titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
       ),
-      bottomAppBarTheme: BottomAppBarTheme(color: Color.fromARGB(255, 17, 20, 16)),
-      textTheme: TextTheme(
+      bottomAppBarTheme: const BottomAppBarTheme(color: Color.fromARGB(255, 17, 20, 16)),
+      textTheme: const TextTheme(
         bodyLarge: TextStyle(color: Colors.white),
         bodyMedium: TextStyle(color: Colors.white),
         bodySmall: TextStyle(color: Colors.white),
@@ -49,7 +59,7 @@ class MyApp extends StatelessWidget {
         labelMedium: TextStyle(color: Colors.white),
         labelSmall: TextStyle(color: Colors.white),
       ),
-      dialogTheme: DialogTheme(
+      dialogTheme: const DialogTheme(
         titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
         backgroundColor: Color.fromARGB(255, 17, 20, 16),
       ),
@@ -57,21 +67,36 @@ class MyApp extends StatelessWidget {
     );
 
     ThemeData lightTheme = ThemeData(
-      scaffoldBackgroundColor: Color.fromARGB(255, 245, 245, 239),
-      appBarTheme: AppBarTheme(backgroundColor: Color.fromARGB(255, 245, 245, 239),
-      titleTextStyle: TextStyle(color: Color.fromARGB(255, 11, 58, 4), fontSize: 20),),
-      bottomAppBarTheme: BottomAppBarTheme(color: Color.fromARGB(255, 43, 114, 28).withOpacity(0.5)),
-      dialogTheme: DialogTheme(
+      scaffoldBackgroundColor: const Color.fromARGB(255, 245, 245, 239),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Color.fromARGB(255, 245, 245, 239),
         titleTextStyle: TextStyle(color: Color.fromARGB(255, 11, 58, 4), fontSize: 20),
       ),
-      textButtonTheme: TextButtonThemeData(style: TextButton.styleFrom(foregroundColor: Color.fromARGB(255, 11, 58, 4))),
+      bottomAppBarTheme: BottomAppBarTheme(color: const Color.fromARGB(255, 43, 114, 28).withOpacity(0.5)),
+      dialogTheme: const DialogTheme(
+        titleTextStyle: TextStyle(color: Color.fromARGB(255, 11, 58, 4), fontSize: 20),
+      ),
+      textButtonTheme: TextButtonThemeData(style: TextButton.styleFrom(foregroundColor: const Color.fromARGB(255, 11, 58, 4))),
     );
+
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        app_localizations.AppLocalizations.delegate,
+      ],
+      supportedLocales: L10n.all,
+      locale: localeProvider.locale,
       theme: isDarkMode ? darkTheme : lightTheme,
       initialRoute: '/',
       routes: {
-        '/': (context) => SplashScreen(),
-        '/home': (context) => const HomeScreen(),
+        '/': (context) {
+          return SplashScreen();
+        },
+        '/home': (context) {
+          return const HomeScreen();
+        },
       },
     );
   }
