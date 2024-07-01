@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
+import 'package:intl/intl.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -45,6 +47,10 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
             const SizedBox(height: 20),
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 11, 58, 4)),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+              ),
               onPressed: () {
                 _changeNickname(context);
               },
@@ -52,6 +58,10 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             const SizedBox(height: 10),
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 11, 58, 4)),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+              ),
               onPressed: () {
                 _changeDateOfBirth(context);
               },
